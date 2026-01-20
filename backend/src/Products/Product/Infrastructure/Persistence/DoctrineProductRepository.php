@@ -4,22 +4,44 @@ declare(strict_types=1);
 
 namespace App\Products\Product\Infrastructure\Persistence;
 
-use App\Products\Product\Domain\ProductRepository;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
+use App\Products\Product\Domain\Product;
+use App\Products\Product\Domain\ProductRepository as ProductRepositoryInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-final class DoctrineProductRepository implements ProductRepository
+/**
+ * @extends ServiceEntityRepository<Product>
+ */
+class DoctrineProductRepository extends ServiceEntityRepository implements ProductRepositoryInterface
 {
-    public function __construct(
-        private readonly HttpClientInterface $httpClient
-    ) {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Product::class);
     }
 
+    /** @return Product[] */
     public function findAll(): array
     {
-        $response = $this->httpClient->request('GET', 'https://dummyjson.com/products');
-                            
-        $data = $response->toArray();
-                    
-        return $data['products'];
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findById(int $id): ?Product
+    {
+        return $this->findOneBy(['id' => $id]);
+    }
+
+    public function save(Product $product): void
+    {
+        $this->getEntityManager()->persist($product);
+        $this->getEntityManager()->flush();
+    }
+
+    public function remove(Product $product): void
+    {
+        $this->getEntityManager()->remove($product);
+        $this->getEntityManager()->flush();
     }
 }

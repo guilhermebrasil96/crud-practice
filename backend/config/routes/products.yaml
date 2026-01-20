@@ -1,0 +1,30 @@
+app_products_list:
+    path: /products
+    controller: App\Products\Product\Infrastructure\Controller\ProductController::list
+    methods: [GET]
+
+app_products_show:
+    path: /products/{id}
+    controller: App\Products\Product\Infrastructure\Controller\ProductController::show
+    methods: [GET]
+    requirements:
+        id: '\d+'
+
+app_products_create:
+    path: /products
+    controller: App\Products\Product\Infrastructure\Controller\ProductController::create
+    methods: [POST]
+
+app_products_update:
+    path: /products/{id}
+    controller: App\Products\Product\Infrastructure\Controller\ProductController::update
+    methods: [PUT]
+    requirements:
+        id: '\d+'
+
+app_products_delete:
+    path: /products/{id}
+    controller: App\Products\Product\Infrastructure\Controller\ProductController::delete
+    methods: [DELETE]
+    requirements:
+        id: '\d+'

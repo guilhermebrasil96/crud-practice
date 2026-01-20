@@ -2,21 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Products\Product\Application\GetProducts;
+namespace App\Products\Product\Application\GetProduct;
 
 use App\Products\Product\Domain\Product;
 use App\Products\Product\Domain\ProductRepository;
 
-final class GetProducts
+final class GetProduct
 {
     public function __construct(
         private readonly ProductRepository $productRepository
     ) {
     }
 
-    /** @return Product[] */
-    public function __invoke(): array
+    public function __invoke(int $id): ?Product
     {
-        return $this->productRepository->findAll();
+        return $this->productRepository->findById($id);
     }
 }

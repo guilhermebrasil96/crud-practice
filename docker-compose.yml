@@ -25,7 +25,6 @@ services:
     container_name: crud_practice_backend
     volumes:
       - ./backend:/var/www/html
-      - backend_vendor:/var/www/html/vendor
     ports:
       - "${BACKEND_PORT:-8000}:9000"
     environment:
@@ -53,7 +52,6 @@ services:
 
 volumes:
   postgres_data:
-  backend_vendor:
 
 networks:
   crud_network:
