@@ -1,0 +1,30 @@
+app_cars_list:
+    path: /cars
+    controller: App\Car\Infrastructure\Controller\CarController::list
+    methods: [GET]
+
+app_cars_show:
+    path: /cars/{id}
+    controller: App\Car\Infrastructure\Controller\CarController::show
+    methods: [GET]
+    requirements:
+        id: '\d+'
+
+app_cars_create:
+    path: /cars
+    controller: App\Car\Infrastructure\Controller\CarController::create
+    methods: [POST]
+
+app_cars_update:
+    path: /cars/{id}
+    controller: App\Car\Infrastructure\Controller\CarController::update
+    methods: [PUT]
+    requirements:
+        id: '\d+'
+
+app_cars_delete:
+    path: /cars/{id}
+    controller: App\Car\Infrastructure\Controller\CarController::delete
+    methods: [DELETE]
+    requirements:
+        id: '\d+'

@@ -3,3 +3,6 @@
 
 products:
     resource: routes/products.yaml
+
+cars:
+    resource: routes/cars.yaml
