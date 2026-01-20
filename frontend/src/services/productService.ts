@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { Product, ProductsResponse } from '../types/product';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost';
 
 export const productService = {
   async getAllProducts(): Promise<Product[]> {

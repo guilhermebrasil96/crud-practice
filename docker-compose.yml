@@ -1,0 +1,60 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: crud_practice_postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-crud_practice}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - crud_network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: crud_practice_backend
+    volumes:
+      - ./backend:/var/www/html
+      - backend_vendor:/var/www/html/vendor
+    ports:
+      - "${BACKEND_PORT:-8000}:9000"
+    environment:
+      - APP_ENV=${APP_ENV:-dev}
+      - APP_SECRET=${APP_SECRET:-dev_secret_change_in_production}
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-crud_practice}?serverVersion=16&charset=utf8
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - crud_network
+
+  nginx:
+    image: nginx:alpine
+    container_name: crud_practice_nginx
+    ports:
+      - "${NGINX_PORT:-80}:80"
+    volumes:
+      - ./backend/public:/var/www/html/public:ro
+      - ./backend/docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - backend
+    networks:
+      - crud_network
+
+volumes:
+  postgres_data:
+  backend_vendor:
+
+networks:
+  crud_network:
+    driver: bridge

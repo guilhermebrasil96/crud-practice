@@ -1,0 +1,15 @@
+doctrine:
+    dbal:
+        url: '%env(resolve:DATABASE_URL)%'
+        charset: utf8mb4
+
+    orm:
+        entity_managers:
+            default:
+                auto_mapping: true
+                mappings:
+                    App:
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Entity'
+                        prefix: 'App\Entity'
+                        alias: App
