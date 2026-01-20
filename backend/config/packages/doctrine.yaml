@@ -18,3 +18,8 @@ doctrine:
                         dir: '%kernel.project_dir%/src/Car'
                         prefix: 'App\Car'
                         alias: Car
+                    Moto:
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Moto'
+                        prefix: 'App\Moto'
+                        alias: Moto

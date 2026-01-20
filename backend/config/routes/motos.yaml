@@ -1,0 +1,30 @@
+app_motos_list:
+    path: /motos
+    controller: App\Moto\Infrastructure\Controller\MotoController::list
+    methods: [GET]
+
+app_motos_show:
+    path: /motos/{id}
+    controller: App\Moto\Infrastructure\Controller\MotoController::show
+    methods: [GET]
+    requirements:
+        id: '\d+'
+
+app_motos_create:
+    path: /motos
+    controller: App\Moto\Infrastructure\Controller\MotoController::create
+    methods: [POST]
+
+app_motos_update:
+    path: /motos/{id}
+    controller: App\Moto\Infrastructure\Controller\MotoController::update
+    methods: [PUT]
+    requirements:
+        id: '\d+'
+
+app_motos_delete:
+    path: /motos/{id}
+    controller: App\Moto\Infrastructure\Controller\MotoController::delete
+    methods: [DELETE]
+    requirements:
+        id: '\d+'

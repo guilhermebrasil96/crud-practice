@@ -24,8 +24,14 @@ services:
     App\Car\Domain\CarRepository:
         alias: App\Car\Infrastructure\Persistence\DoctrineCarRepository
 
+    App\Moto\Domain\MotoRepository:
+        alias: App\Moto\Infrastructure\Persistence\DoctrineMotoRepository
+
     App\Product\Infrastructure\Controller\ProductController:
         tags: ['controller.service_arguments']
 
     App\Car\Infrastructure\Controller\CarController:
+        tags: ['controller.service_arguments']
+
+    App\Moto\Infrastructure\Controller\MotoController:
         tags: ['controller.service_arguments']

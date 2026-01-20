@@ -3,6 +3,7 @@ import { Layout } from './components/Layout';
 import { ProductList } from './features/products';
 import { CarList } from './features/cars';
 import './App.css';
+import { MotoList } from './features/motos/components/MotoList';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route index element={<Navigate to="/products" replace />} />
         <Route path="products" element={<ProductList />} />
         <Route path="cars" element={<CarList />} />
+        <Route path="motos" element={<MotoList />} />
       </Route>
       <Route path="*" element={<Navigate to="/products" replace />} />
     </Routes>

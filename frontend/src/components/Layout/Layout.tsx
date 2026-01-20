@@ -11,6 +11,9 @@ export function Layout() {
         <NavLink to="/cars" className={({ isActive }) => (isActive ? 'active' : '')}>
           Cars
         </NavLink>
+        <NavLink to="/motos" className={({ isActive }) => (isActive ? 'active' : '')}>
+          Motos
+        </NavLink>
       </nav>
       <main className="layout-main">
         <Outlet />

@@ -6,3 +6,6 @@ products:
 
 cars:
     resource: routes/cars.yaml
+
+motos:
+    resource: routes/motos.yaml
