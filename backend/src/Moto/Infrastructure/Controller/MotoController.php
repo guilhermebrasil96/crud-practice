@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Moto\Infrastructure\Controller;
 
+use App\Infrastructure\File\FileUploader;
 use App\Moto\Application\CreateMoto;
 use App\Moto\Application\DeleteMoto;
 use App\Moto\Application\GetMoto;
@@ -22,6 +23,7 @@ final class MotoController
         private readonly CreateMoto $createMoto,
         private readonly UpdateMoto $updateMoto,
         private readonly DeleteMoto $deleteMoto,
+        private readonly FileUploader $fileUploader,
     ) {
     }
 
@@ -43,7 +45,19 @@ final class MotoController
 
     public function create(Request $request): JsonResponse
     {
-        $body = json_decode($request->getContent(), true) ?? [];
+        $isForm = $request->request->has('name') || $request->files->has('image');
+        $body = $isForm
+            ? ['name' => $request->request->get('name', ''), 'description' => $request->request->get('description', ''), 'price' => $request->request->get('price')]
+            : (json_decode($request->getContent(), true) ?? []);
+
+        if ($request->files->has('image') && $request->files->get('image')) {
+            try {
+                $body['image'] = $this->fileUploader->upload($request->files->get('image'), 'motos');
+            } catch (\InvalidArgumentException $e) {
+                return new JsonResponse(['success' => false, 'error' => ['message' => $e->getMessage()]], Response::HTTP_BAD_REQUEST);
+            }
+        }
+
         try {
             $moto = $this->createMoto->__invoke($body);
         } catch (\InvalidArgumentException $e) {
@@ -54,7 +68,25 @@ final class MotoController
 
     public function update(Request $request, int $id): JsonResponse
     {
-        $body = json_decode($request->getContent(), true) ?? [];
+        $isForm = $request->request->has('name') || $request->files->has('image');
+        if ($isForm) {
+            $body = ['name' => $request->request->get('name'), 'description' => $request->request->get('description')];
+            $p = $request->request->get('price');
+            if ($p !== null && $p !== '') {
+                $body['price'] = $p;
+            }
+        } else {
+            $body = json_decode($request->getContent(), true) ?? [];
+        }
+
+        if ($request->files->has('image') && $request->files->get('image')) {
+            try {
+                $body['image'] = $this->fileUploader->upload($request->files->get('image'), 'motos');
+            } catch (\InvalidArgumentException $e) {
+                return new JsonResponse(['success' => false, 'error' => ['message' => $e->getMessage()]], Response::HTTP_BAD_REQUEST);
+            }
+        }
+
         $moto = $this->updateMoto->__invoke($id, $body);
         if ($moto === null) {
             return new JsonResponse(['success' => false, 'error' => ['message' => 'Moto not found']], Response::HTTP_NOT_FOUND);

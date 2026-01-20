@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
+import { API_URL } from '../../../api/client';
 import type { Product } from '../types/product';
 import './ProductForm.css';
 
 interface ProductFormProps {
   product: Product | null;
-  onSave: (data: { name: string; description: string; price?: number }) => Promise<void>;
+  onSave: (data: { name: string; description: string; price?: number; image?: File | null }) => Promise<void>;
   onCancel: () => void;
 }
 
@@ -12,6 +13,7 @@ export function ProductForm({ product, onSave, onCancel }: ProductFormProps) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -22,10 +24,12 @@ export function ProductForm({ product, onSave, onCancel }: ProductFormProps) {
       setName(product.name);
       setDescription(product.description);
       setPrice(product.price != null ? String(product.price) : '');
+      setImageFile(null);
     } else {
       setName('');
       setDescription('');
       setPrice('');
+      setImageFile(null);
     }
   }, [product]);
 
@@ -39,12 +43,13 @@ export function ProductForm({ product, onSave, onCancel }: ProductFormProps) {
     }
     setSaving(true);
     try {
-      const payload: { name: string; description: string; price?: number } = {
+      const payload: { name: string; description: string; price?: number; image?: File | null } = {
         name: n,
         description: description.trim(),
       };
       const p = price.trim();
       if (p && !Number.isNaN(Number(p))) payload.price = Number(p);
+      if (imageFile) payload.image = imageFile;
       await onSave(payload);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Error saving');
@@ -88,6 +93,18 @@ export function ProductForm({ product, onSave, onCancel }: ProductFormProps) {
               value={price}
               onChange={(e) => setPrice(e.target.value)}
               placeholder="0.00"
+            />
+          </div>
+          <div className="form-field">
+            <label htmlFor="product-image">Image</label>
+            {product?.image && (
+              <img src={`${API_URL}/${product.image}`} alt="" className="form-image-preview" />
+            )}
+            <input
+              id="product-image"
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              onChange={(e) => setImageFile(e.target.files?.[0] ?? null)}
             />
           </div>
           <div className="form-actions">

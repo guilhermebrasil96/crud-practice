@@ -15,7 +15,7 @@ final class UpdateProduct
     }
 
     /**
-     * @param array{name?: string, description?: string, price?: string|float} $data
+     * @param array{name?: string, description?: string, price?: string|float, image?: string|null} $data
      */
     public function __invoke(int $id, array $data): ?Product
     {
@@ -32,6 +32,9 @@ final class UpdateProduct
         }
         if (array_key_exists('price', $data)) {
             $product->setPrice($data['price']);
+        }
+        if (array_key_exists('image', $data)) {
+            $product->setImage($data['image']);
         }
 
         $this->productRepository->save($product);

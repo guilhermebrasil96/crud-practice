@@ -1,3 +1,4 @@
+import { API_URL } from '../../../api/client';
 import type { Product } from '../types/product';
 import './ProductCard.css';
 
@@ -11,6 +12,9 @@ export function ProductCard({ product, onEdit, onDelete }: ProductCardProps) {
   return (
     <div className="product-card">
       <div className="product-info">
+        {product.image && (
+          <img src={`${API_URL}/${product.image}`} alt="" className="product-card-image" />
+        )}
         <h3 className="product-title">{product.name}</h3>
         <p className="product-description">{product.description}</p>
         <p className="product-price">{product.price != null ? `€${product.price}` : '—'}</p>

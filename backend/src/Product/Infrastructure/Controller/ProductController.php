@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Product\Infrastructure\Controller;
 
+use App\Infrastructure\File\FileUploader;
 use App\Product\Application\CreateProduct;
 use App\Product\Application\DeleteProduct;
 use App\Product\Application\GetProduct;
@@ -22,6 +23,7 @@ final class ProductController
         private readonly CreateProduct $createProduct,
         private readonly UpdateProduct $updateProduct,
         private readonly DeleteProduct $deleteProduct,
+        private readonly FileUploader $fileUploader,
     ) {
     }
 
@@ -43,14 +45,29 @@ final class ProductController
 
     public function create(Request $request): JsonResponse
     {
-        $body = json_decode($request->getContent(), true) ?? [];
+        $isForm = $request->request->has('name') || $request->files->has('image');
+        if ($isForm) {
+            $name = (string) $request->request->get('name', '');
+            $description = (string) $request->request->get('description', '');
+            $price = $request->request->get('price');
+        } else {
+            $body = json_decode($request->getContent(), true) ?? [];
+            $name = $body['name'] ?? '';
+            $description = $body['description'] ?? '';
+            $price = $body['price'] ?? null;
+        }
+
+        $imagePath = null;
+        if ($request->files->has('image') && $request->files->get('image')) {
+            try {
+                $imagePath = $this->fileUploader->upload($request->files->get('image'), 'products');
+            } catch (\InvalidArgumentException $e) {
+                return new JsonResponse(['success' => false, 'error' => ['message' => $e->getMessage()]], Response::HTTP_BAD_REQUEST);
+            }
+        }
 
         try {
-            $product = $this->createProduct->__invoke(
-                $body['name'] ?? '',
-                $body['description'] ?? '',
-                $body['price'] ?? null
-            );
+            $product = $this->createProduct->__invoke($name, $description, $price, $imagePath);
         } catch (\InvalidArgumentException $e) {
             return new JsonResponse(['success' => false, 'error' => ['message' => $e->getMessage()]], Response::HTTP_BAD_REQUEST);
         }
@@ -60,8 +77,29 @@ final class ProductController
 
     public function update(Request $request, int $id): JsonResponse
     {
-        $body = json_decode($request->getContent(), true) ?? [];
-        $product = $this->updateProduct->__invoke($id, $body);
+        $isForm = $request->request->has('name') || $request->files->has('image');
+        if ($isForm) {
+            $data = [
+                'name' => $request->request->get('name'),
+                'description' => $request->request->get('description'),
+            ];
+            $p = $request->request->get('price');
+            if ($p !== null && $p !== '') {
+                $data['price'] = $p;
+            }
+        } else {
+            $data = json_decode($request->getContent(), true) ?? [];
+        }
+
+        if ($request->files->has('image') && $request->files->get('image')) {
+            try {
+                $data['image'] = $this->fileUploader->upload($request->files->get('image'), 'products');
+            } catch (\InvalidArgumentException $e) {
+                return new JsonResponse(['success' => false, 'error' => ['message' => $e->getMessage()]], Response::HTTP_BAD_REQUEST);
+            }
+        }
+
+        $product = $this->updateProduct->__invoke($id, $data);
 
         if ($product === null) {
             return new JsonResponse(['success' => false, 'error' => ['message' => 'Product not found']], Response::HTTP_NOT_FOUND);

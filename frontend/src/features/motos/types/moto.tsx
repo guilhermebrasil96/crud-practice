@@ -3,4 +3,5 @@ export interface Moto {
   name: string;
   description: string;
   price: number | null;
+  image?: string | null;
 }

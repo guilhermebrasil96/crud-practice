@@ -1,4 +1,4 @@
-import { apiClient } from '../../../api/client';
+import { apiClient, formDataClient } from '../../../api/client';
 import type { ApiResponse } from '../../../shared/types/api';
 import type { Car } from '../types/car';
 
@@ -15,13 +15,33 @@ export const carService = {
     return null;
   },
 
-  async create(payload: { name: string; description?: string; price?: number }): Promise<Car> {
+  async create(payload: { name: string; description?: string; price?: number; image?: File | null }): Promise<Car> {
+    if (payload.image instanceof File) {
+      const fd = new FormData();
+      fd.append('name', payload.name);
+      fd.append('description', payload.description ?? '');
+      if (payload.price != null) fd.append('price', String(payload.price));
+      fd.append('image', payload.image);
+      const { data } = await formDataClient.post<ApiResponse<{ car: Car }>>('/cars', fd);
+      if (!data.success || !data.data?.car) throw new Error(data.error?.message || 'Error creating');
+      return data.data.car;
+    }
     const { data } = await apiClient.post<ApiResponse<{ car: Car }>>('/cars', payload);
     if (!data.success || !data.data?.car) throw new Error(data.error?.message || 'Error creating');
     return data.data.car;
   },
 
-  async update(id: number, payload: Partial<{ name: string; description: string; price: number }>): Promise<Car> {
+  async update(id: number, payload: Partial<{ name: string; description: string; price: number; image?: File | null }>): Promise<Car> {
+    if (payload.image instanceof File) {
+      const fd = new FormData();
+      fd.append('name', payload.name ?? '');
+      fd.append('description', payload.description ?? '');
+      if (payload.price != null) fd.append('price', String(payload.price));
+      fd.append('image', payload.image);
+      const { data } = await formDataClient.put<ApiResponse<{ car: Car }>>(`/cars/${id}`, fd);
+      if (!data.success || !data.data?.car) throw new Error(data.error?.message || 'Error updating');
+      return data.data.car;
+    }
     const { data } = await apiClient.put<ApiResponse<{ car: Car }>>(`/cars/${id}`, payload);
     if (!data.success || !data.data?.car) throw new Error(data.error?.message || 'Error updating');
     return data.data.car;

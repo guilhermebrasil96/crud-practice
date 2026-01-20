@@ -22,6 +22,9 @@ class Car
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
     private ?string $price = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -62,6 +65,17 @@ class Car
         return $this;
     }
 
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
+        return $this;
+    }
+
     public function toArray(): array
     {
         return [
@@ -69,6 +83,7 @@ class Car
             'name' => $this->name,
             'description' => $this->description,
             'price' => $this->price !== null ? (float) $this->price : null,
+            'image' => $this->image,
         ];
     }
 }

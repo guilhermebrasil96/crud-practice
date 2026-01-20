@@ -10,6 +10,7 @@ use App\Car\Application\GetCar;
 use App\Car\Application\GetCars;
 use App\Car\Application\UpdateCar;
 use App\Car\Domain\Car;
+use App\Infrastructure\File\FileUploader;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +23,7 @@ final class CarController
         private readonly CreateCar $createCar,
         private readonly UpdateCar $updateCar,
         private readonly DeleteCar $deleteCar,
+        private readonly FileUploader $fileUploader,
     ) {
     }
 
@@ -43,7 +45,19 @@ final class CarController
 
     public function create(Request $request): JsonResponse
     {
-        $body = json_decode($request->getContent(), true) ?? [];
+        $isForm = $request->request->has('name') || $request->files->has('image');
+        $body = $isForm
+            ? ['name' => $request->request->get('name', ''), 'description' => $request->request->get('description', ''), 'price' => $request->request->get('price')]
+            : (json_decode($request->getContent(), true) ?? []);
+
+        if ($request->files->has('image') && $request->files->get('image')) {
+            try {
+                $body['image'] = $this->fileUploader->upload($request->files->get('image'), 'cars');
+            } catch (\InvalidArgumentException $e) {
+                return new JsonResponse(['success' => false, 'error' => ['message' => $e->getMessage()]], Response::HTTP_BAD_REQUEST);
+            }
+        }
+
         try {
             $car = $this->createCar->__invoke($body);
         } catch (\InvalidArgumentException $e) {
@@ -54,7 +68,25 @@ final class CarController
 
     public function update(Request $request, int $id): JsonResponse
     {
-        $body = json_decode($request->getContent(), true) ?? [];
+        $isForm = $request->request->has('name') || $request->files->has('image');
+        if ($isForm) {
+            $body = ['name' => $request->request->get('name'), 'description' => $request->request->get('description')];
+            $p = $request->request->get('price');
+            if ($p !== null && $p !== '') {
+                $body['price'] = $p;
+            }
+        } else {
+            $body = json_decode($request->getContent(), true) ?? [];
+        }
+
+        if ($request->files->has('image') && $request->files->get('image')) {
+            try {
+                $body['image'] = $this->fileUploader->upload($request->files->get('image'), 'cars');
+            } catch (\InvalidArgumentException $e) {
+                return new JsonResponse(['success' => false, 'error' => ['message' => $e->getMessage()]], Response::HTTP_BAD_REQUEST);
+            }
+        }
+
         $car = $this->updateCar->__invoke($id, $body);
         if ($car === null) {
             return new JsonResponse(['success' => false, 'error' => ['message' => 'Car not found']], Response::HTTP_NOT_FOUND);

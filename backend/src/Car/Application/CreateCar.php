@@ -27,6 +27,9 @@ final class CreateCar
         if (array_key_exists('price', $data)) {
             $car->setPrice($data['price']);
         }
+        if (!empty($data['image'])) {
+            $car->setImage($data['image']);
+        }
 
         $this->carRepository->save($car);
 

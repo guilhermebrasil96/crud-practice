@@ -32,6 +32,9 @@ final class UpdateCar
         if (array_key_exists('price', $data)) {
             $car->setPrice($data['price']);
         }
+        if (array_key_exists('image', $data)) {
+            $car->setImage($data['image']);
+        }
         $this->carRepository->save($car);
         return $car;
     }

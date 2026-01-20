@@ -27,6 +27,9 @@ final class CreateMoto
         if (array_key_exists('price', $data)) {
             $moto->setPrice($data['price']);
         }
+        if (!empty($data['image'])) {
+            $moto->setImage($data['image']);
+        }
 
         $this->motoRepository->save($moto);
 

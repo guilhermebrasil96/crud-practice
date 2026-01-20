@@ -3,7 +3,7 @@ import { motoService } from '../services/motoService';
 import type { Moto } from '../types/moto';
 import { MotoCard } from './MotoCard';
 import { MotoForm } from './MotoForm';
-import './MotoList.css';
+import '../../products/components/ProductList.css';
 
 export function MotoList() {
   const [motos, setMotos] = useState<Moto[]>([]);
@@ -68,14 +68,14 @@ export function MotoList() {
   if (error) return <div className="list-error">{error}</div>;
 
   return (
-    <div className="moto-list">
-      <div className="moto-list-header">
+    <div className="product-list">
+      <div className="product-list-header">
         <h1>Motos</h1>
         <button type="button" className="btn-primary" onClick={openCreate}>
           New Moto
         </button>
       </div>
-      <div className="moto-list-grid">
+      <div className="product-list-grid">
         {motos.map((p) => (
           <MotoCard key={p.id} moto={p} onEdit={openEdit} onDelete={handleDelete} />
         ))}

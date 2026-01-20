@@ -30,6 +30,9 @@ final class UpdateMoto
         if (array_key_exists('price', $data)) {
             $moto->setPrice($data['price']);
         }
+        if (array_key_exists('image', $data)) {
+            $moto->setImage($data['image']);
+        }
         $this->motoRepository->save($moto);
         return $moto;
     }

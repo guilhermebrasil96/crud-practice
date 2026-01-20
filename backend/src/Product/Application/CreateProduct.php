@@ -14,7 +14,7 @@ final class CreateProduct
     ) {
     }
 
-    public function __invoke(string $name, string $description, string|float|null $price = null): Product
+    public function __invoke(string $name, string $description, string|float|null $price = null, ?string $image = null): Product
     {
         if (trim($name) === '') {
             throw new \InvalidArgumentException('name is required');
@@ -25,6 +25,9 @@ final class CreateProduct
         $product->setDescription($description);
         if ($price !== null) {
             $product->setPrice($price);
+        }
+        if ($image !== null) {
+            $product->setImage($image);
         }
 
         $this->productRepository->save($product);

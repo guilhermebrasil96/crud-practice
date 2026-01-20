@@ -1,5 +1,6 @@
+import { API_URL } from '../../../api/client';
 import type { Moto } from '../types/moto';
-import './MotoCard.css';
+import '../../products/components/ProductCard.css';
 
 interface MotoCardProps {
   moto: Moto;
@@ -9,13 +10,16 @@ interface MotoCardProps {
 
 export function MotoCard({ moto, onEdit, onDelete }: MotoCardProps) {
   return (
-    <div className="moto-card">
-      <div className="moto-info">
-        <h3 className="moto-title">{moto.name}</h3>
-        <p className="moto-description">{moto.description}</p>
-        <p className="moto-price">{moto.price != null ? `€${moto.price}` : '—'}</p>
+    <div className="product-card">
+      <div className="product-info">
+        {moto.image && (
+          <img src={`${API_URL}/${moto.image}`} alt="" className="product-card-image" />
+        )}
+        <h3 className="product-title">{moto.name}</h3>
+        <p className="product-description">{moto.description}</p>
+        <p className="product-price">{moto.price != null ? `€${moto.price}` : '—'}</p>
         {(onEdit || onDelete) && (
-          <div className="moto-actions">
+          <div className="product-actions">
             {onEdit && <button type="button" onClick={() => onEdit(moto)}>Edit</button>}
             {onDelete && <button type="button" onClick={() => onDelete(moto)}>Delete</button>}
           </div>
