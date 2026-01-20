@@ -6,10 +6,10 @@ export function Layout() {
     <div className="layout">
       <nav className="layout-nav">
         <NavLink to="/products" className={({ isActive }) => (isActive ? 'active' : '')}>
-          Productos
+          Products
         </NavLink>
         <NavLink to="/cars" className={({ isActive }) => (isActive ? 'active' : '')}>
-          Coches
+          Cars
         </NavLink>
       </nav>
       <main className="layout-main">

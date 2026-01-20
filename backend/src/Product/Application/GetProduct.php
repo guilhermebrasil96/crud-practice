@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Products\Product\Application\GetProduct;
+namespace App\Product\Application;
 
-use App\Products\Product\Domain\Product;
-use App\Products\Product\Domain\ProductRepository;
+use App\Product\Domain\Product;
+use App\Product\Domain\ProductRepository;
 
 final class GetProduct
 {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Products\Product\Application\DeleteProduct;
+namespace App\Product\Application;
 
-use App\Products\Product\Domain\ProductRepository;
+use App\Product\Domain\ProductRepository;
 
 final class DeleteProduct
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Products\Product\Domain;
+namespace App\Product\Domain;
 
 interface ProductRepository
 {

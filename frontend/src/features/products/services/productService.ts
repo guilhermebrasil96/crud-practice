@@ -17,13 +17,13 @@ export const productService = {
 
   async create(payload: { name: string; description?: string; price?: number }): Promise<Product> {
     const { data } = await apiClient.post<ApiResponse<{ product: Product }>>('/products', payload);
-    if (!data.success || !data.data?.product) throw new Error(data.error?.message || 'Error al crear');
+    if (!data.success || !data.data?.product) throw new Error(data.error?.message || 'Error creating');
     return data.data.product;
   },
 
   async update(id: number, payload: Partial<{ name: string; description: string; price: number }>): Promise<Product> {
     const { data } = await apiClient.put<ApiResponse<{ product: Product }>>(`/products/${id}`, payload);
-    if (!data.success || !data.data?.product) throw new Error(data.error?.message || 'Error al actualizar');
+    if (!data.success || !data.data?.product) throw new Error(data.error?.message || 'Error updating');
     return data.data.product;
   },
 

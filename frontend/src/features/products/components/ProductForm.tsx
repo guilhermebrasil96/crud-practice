@@ -34,7 +34,7 @@ export function ProductForm({ product, onSave, onCancel }: ProductFormProps) {
     setError(null);
     const n = name.trim();
     if (!n) {
-      setError('El nombre es obligatorio');
+      setError('Name is required');
       return;
     }
     setSaving(true);
@@ -47,7 +47,7 @@ export function ProductForm({ product, onSave, onCancel }: ProductFormProps) {
       if (p && !Number.isNaN(Number(p))) payload.price = Number(p);
       await onSave(payload);
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Error al guardar');
+      setError(e instanceof Error ? e.message : 'Error saving');
     } finally {
       setSaving(false);
     }
@@ -56,11 +56,11 @@ export function ProductForm({ product, onSave, onCancel }: ProductFormProps) {
   return (
     <div className="form-backdrop" onClick={onCancel}>
       <div className="form-modal" onClick={(e) => e.stopPropagation()}>
-        <h2>{isEdit ? 'Editar producto' : 'Nuevo producto'}</h2>
+        <h2>{isEdit ? 'Edit product' : 'New product'}</h2>
         <form onSubmit={handleSubmit}>
           {error && <div className="form-error">{error}</div>}
           <div className="form-field">
-            <label htmlFor="product-name">Nombre *</label>
+            <label htmlFor="product-name">Name *</label>
             <input
               id="product-name"
               value={name}
@@ -70,7 +70,7 @@ export function ProductForm({ product, onSave, onCancel }: ProductFormProps) {
             />
           </div>
           <div className="form-field">
-            <label htmlFor="product-desc">Descripción</label>
+            <label htmlFor="product-desc">Description</label>
             <textarea
               id="product-desc"
               value={description}
@@ -79,7 +79,7 @@ export function ProductForm({ product, onSave, onCancel }: ProductFormProps) {
             />
           </div>
           <div className="form-field">
-            <label htmlFor="product-price">Precio</label>
+            <label htmlFor="product-price">Price</label>
             <input
               id="product-price"
               type="number"
@@ -92,10 +92,10 @@ export function ProductForm({ product, onSave, onCancel }: ProductFormProps) {
           </div>
           <div className="form-actions">
             <button type="button" onClick={onCancel} disabled={saving}>
-              Cancelar
+              Cancel
             </button>
             <button type="submit" disabled={saving}>
-              {saving ? 'Guardando…' : isEdit ? 'Guardar' : 'Crear'}
+              {saving ? 'Saving…' : isEdit ? 'Save' : 'Create'}
             </button>
           </div>
         </form>

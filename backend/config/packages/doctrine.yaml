@@ -8,11 +8,11 @@ doctrine:
             default:
                 auto_mapping: true
                 mappings:
-                    Products:
+                    Product:
                         is_bundle: false
-                        dir: '%kernel.project_dir%/src/Products'
-                        prefix: 'App\Products'
-                        alias: Products
+                        dir: '%kernel.project_dir%/src/Product'
+                        prefix: 'App\Product'
+                        alias: Product
                     Car:
                         is_bundle: false
                         dir: '%kernel.project_dir%/src/Car'

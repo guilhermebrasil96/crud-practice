@@ -18,13 +18,13 @@ services:
     App\:
         resource: '../src/'
 
-    App\Products\Product\Domain\ProductRepository:
-        alias: App\Products\Product\Infrastructure\Persistence\DoctrineProductRepository
+    App\Product\Domain\ProductRepository:
+        alias: App\Product\Infrastructure\Persistence\DoctrineProductRepository
 
     App\Car\Domain\CarRepository:
         alias: App\Car\Infrastructure\Persistence\DoctrineCarRepository
 
-    App\Products\Product\Infrastructure\Controller\ProductController:
+    App\Product\Infrastructure\Controller\ProductController:
         tags: ['controller.service_arguments']
 
     App\Car\Infrastructure\Controller\CarController:

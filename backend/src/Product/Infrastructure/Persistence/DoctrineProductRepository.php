@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Products\Product\Infrastructure\Persistence;
+namespace App\Product\Infrastructure\Persistence;
 
-use App\Products\Product\Domain\Product;
-use App\Products\Product\Domain\ProductRepository as ProductRepositoryInterface;
+use App\Product\Domain\Product;
+use App\Product\Domain\ProductRepository as ProductRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

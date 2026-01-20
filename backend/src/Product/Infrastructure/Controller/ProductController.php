@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Products\Product\Infrastructure\Controller;
+namespace App\Product\Infrastructure\Controller;
 
-use App\Products\Product\Application\CreateProduct\CreateProduct;
-use App\Products\Product\Application\DeleteProduct\DeleteProduct;
-use App\Products\Product\Application\GetProduct\GetProduct;
-use App\Products\Product\Application\GetProducts\GetProducts;
-use App\Products\Product\Application\UpdateProduct\UpdateProduct;
-use App\Products\Product\Domain\Product;
+use App\Product\Application\CreateProduct;
+use App\Product\Application\DeleteProduct;
+use App\Product\Application\GetProduct;
+use App\Product\Application\GetProducts;
+use App\Product\Application\UpdateProduct;
+use App\Product\Domain\Product;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Products\Product\Domain;
+namespace App\Product\Domain;
 
-use App\Products\Product\Infrastructure\Persistence\DoctrineProductRepository;
+use App\Product\Infrastructure\Persistence\DoctrineProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DoctrineProductRepository::class)]

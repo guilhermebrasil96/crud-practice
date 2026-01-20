@@ -16,8 +16,8 @@ export function ProductCard({ product, onEdit, onDelete }: ProductCardProps) {
         <p className="product-price">{product.price != null ? `€${product.price}` : '—'}</p>
         {(onEdit || onDelete) && (
           <div className="product-actions">
-            {onEdit && <button type="button" onClick={() => onEdit(product)}>Editar</button>}
-            {onDelete && <button type="button" onClick={() => onDelete(product)}>Eliminar</button>}
+            {onEdit && <button type="button" onClick={() => onEdit(product)}>Edit</button>}
+            {onDelete && <button type="button" onClick={() => onDelete(product)}>Delete</button>}
           </div>
         )}
       </div>

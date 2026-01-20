@@ -19,7 +19,7 @@ export function ProductList() {
       const data = await productService.getAll();
       setProducts(data);
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Error al cargar');
+      setError(e instanceof Error ? e.message : 'Error loading');
     } finally {
       setLoading(false);
     }
@@ -55,24 +55,24 @@ export function ProductList() {
   };
 
   const handleDelete = async (p: Product) => {
-    if (!confirm(`¿Eliminar "${p.name}"?`)) return;
+    if (!confirm(`Delete "${p.name}"?`)) return;
     try {
       await productService.delete(p.id);
       setProducts((prev) => prev.filter((x) => x.id !== p.id));
     } catch (e) {
-      alert(e instanceof Error ? e.message : 'Error al eliminar');
+      alert(e instanceof Error ? e.message : 'Error deleting');
     }
   };
 
-  if (loading) return <div className="list-loading">Cargando...</div>;
+  if (loading) return <div className="list-loading">Loading...</div>;
   if (error) return <div className="list-error">{error}</div>;
 
   return (
     <div className="product-list">
       <div className="product-list-header">
-        <h1>Productos</h1>
+        <h1>Products</h1>
         <button type="button" className="btn-primary" onClick={openCreate}>
-          Nuevo producto
+          New Product
         </button>
       </div>
       <div className="product-list-grid">

@@ -17,13 +17,13 @@ export const carService = {
 
   async create(payload: { name: string; description?: string; price?: number }): Promise<Car> {
     const { data } = await apiClient.post<ApiResponse<{ car: Car }>>('/cars', payload);
-    if (!data.success || !data.data?.car) throw new Error(data.error?.message || 'Error al crear');
+    if (!data.success || !data.data?.car) throw new Error(data.error?.message || 'Error creating');
     return data.data.car;
   },
 
   async update(id: number, payload: Partial<{ name: string; description: string; price: number }>): Promise<Car> {
     const { data } = await apiClient.put<ApiResponse<{ car: Car }>>(`/cars/${id}`, payload);
-    if (!data.success || !data.data?.car) throw new Error(data.error?.message || 'Error al actualizar');
+    if (!data.success || !data.data?.car) throw new Error(data.error?.message || 'Error updating');
     return data.data.car;
   },
 

@@ -9,15 +9,15 @@ interface CarCardProps {
 
 export function CarCard({ car, onEdit, onDelete }: CarCardProps) {
   return (
-    <div className="car-card">
-      <div className="car-info">
-        <h3 className="car-title">{car.name}</h3>
-        <p className="car-description">{car.description}</p>
-        <p className="car-price">{car.price != null ? `€${car.price}` : '—'}</p>
+    <div className="product-card">
+      <div className="product-info">
+        <h3 className="product-title">{car.name}</h3>
+        <p className="product-description">{car.description}</p>
+        <p className="product-price">{car.price != null ? `€${car.price}` : '—'}</p>
         {(onEdit || onDelete) && (
-          <div className="car-actions">
-            {onEdit && <button type="button" onClick={() => onEdit(car)}>Editar</button>}
-            {onDelete && <button type="button" onClick={() => onDelete(car)}>Eliminar</button>}
+          <div className="product-actions">
+            {onEdit && <button type="button" onClick={() => onEdit(car)}>Edit</button>}
+            {onDelete && <button type="button" onClick={() => onDelete(car)}>Delete</button>}
           </div>
         )}
       </div>
