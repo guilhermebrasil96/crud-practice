@@ -10,7 +10,7 @@ use App\Car\Application\GetCar;
 use App\Car\Application\GetCars;
 use App\Car\Application\UpdateCar;
 use App\Car\Domain\Car;
-use App\Infrastructure\File\FileUploader;
+use App\Shared\Infrastructure\File\FileUploader;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

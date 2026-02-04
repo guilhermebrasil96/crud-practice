@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Moto\Infrastructure\Controller;
 
-use App\Infrastructure\File\FileUploader;
+use App\Shared\Infrastructure\File\FileUploader;
 use App\Moto\Application\CreateMoto;
 use App\Moto\Application\DeleteMoto;
 use App\Moto\Application\GetMoto;

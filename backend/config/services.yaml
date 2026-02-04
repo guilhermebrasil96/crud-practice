@@ -18,7 +18,7 @@ services:
     App\:
         resource: '../src/'
 
-    App\Infrastructure\File\FileUploader:
+    App\Shared\Infrastructure\File\FileUploader:
         arguments:
             $projectDir: '%kernel.project_dir%'
 

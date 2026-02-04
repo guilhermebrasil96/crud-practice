@@ -10,7 +10,7 @@ use App\Product\Application\CreateProduct;
 use App\Product\Application\UpdateProduct;
 use App\Product\Application\DeleteProduct;
 use App\Product\Domain\Product;
-use App\Infrastructure\File\FileUploader;
+use App\Shared\Infrastructure\File\FileUploader;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
