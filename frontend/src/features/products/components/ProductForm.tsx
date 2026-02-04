@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { API_URL } from '../../../api/client';
 import type { Product } from '../types/product';
-import './ProductForm.css';
+import '../../../shared/styles/ProductForm.css';
 
 interface ProductFormProps {
   product: Product | null;

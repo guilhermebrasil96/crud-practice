@@ -10,24 +10,25 @@ use App\Product\Domain\ProductRepository;
 final class CreateProduct
 {
     public function __construct(
-        private readonly ProductRepository $productRepository
+        private readonly ProductRepository $productRepository,
     ) {
     }
-
-    public function __invoke(string $name, string $description, string|float|null $price = null, ?string $image = null): Product
+    public function __invoke(array $data): Product
     {
+        $name = $data['name'] ?? '';
         if (trim($name) === '') {
             throw new \InvalidArgumentException('name is required');
         }
 
         $product = new Product();
         $product->setName(trim($name));
-        $product->setDescription($description);
-        if ($price !== null) {
-            $product->setPrice($price);
+        $product->setDescription($data['description'] ?? '');
+
+        if (array_key_exists('price', $data)) {
+            $product->setPrice($data['price']);
         }
-        if ($image !== null) {
-            $product->setImage($image);
+        if (!empty($data['image'])) {
+            $product->setImage($data['image']);
         }
 
         $this->productRepository->save($product);

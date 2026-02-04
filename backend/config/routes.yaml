@@ -1,11 +1,11 @@
 # yaml-language-server: $schema=../vendor/symfony/routing/Loader/schema/routing.schema.json
 # bin/console debug:router
 
-products:
-    resource: routes/products.yaml
-
 cars:
     resource: routes/cars.yaml
 
 motos:
     resource: routes/motos.yaml
+
+products:
+    resource: routes/products.yaml

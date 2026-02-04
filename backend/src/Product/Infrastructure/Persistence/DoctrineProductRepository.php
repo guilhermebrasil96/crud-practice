@@ -5,21 +5,17 @@ declare(strict_types=1);
 namespace App\Product\Infrastructure\Persistence;
 
 use App\Product\Domain\Product;
-use App\Product\Domain\ProductRepository as ProductRepositoryInterface;
+use App\Product\Domain\ProductRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @extends ServiceEntityRepository<Product>
- */
-class DoctrineProductRepository extends ServiceEntityRepository implements ProductRepositoryInterface
+final class DoctrineProductRepository extends ServiceEntityRepository implements ProductRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Product::class);
     }
 
-    /** @return Product[] */
     public function findAll(): array
     {
         return $this->createQueryBuilder('p')

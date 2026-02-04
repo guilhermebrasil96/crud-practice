@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { API_URL } from '../../../api/client';
 import type { Car } from '../types/car';
-import './CarForm.css';
+import '../../../shared/styles/ProductForm.css';
 
 interface CarFormProps {
   car: Car | null;

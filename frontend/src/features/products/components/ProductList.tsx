@@ -3,7 +3,7 @@ import { productService } from '../services/productService';
 import type { Product } from '../types/product';
 import { ProductCard } from './ProductCard';
 import { ProductForm } from './ProductForm';
-import './ProductList.css';
+import '../../../shared/styles/ProductList.css';
 
 export function ProductList() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -71,13 +71,10 @@ export function ProductList() {
     <div className="product-list">
       <div className="product-list-header">
         <h1>Products</h1>
-        <button type="button" className="btn-primary" onClick={openCreate}>
-          New Product
-        </button>
       </div>
       <div className="product-list-grid">
-        {products.map((p) => (
-          <ProductCard key={p.id} product={p} onEdit={openEdit} onDelete={handleDelete} />
+        {products.map((c) => (
+          <ProductCard key={c.id} product={c} onEdit={openEdit} onDelete={handleDelete} />
         ))}
       </div>
       {formOpen && (

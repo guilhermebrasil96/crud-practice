@@ -22,20 +22,30 @@ services:
         arguments:
             $projectDir: '%kernel.project_dir%'
 
-    App\Product\Domain\ProductRepository:
-        alias: App\Product\Infrastructure\Persistence\DoctrineProductRepository
-
     App\Car\Domain\CarRepository:
         alias: App\Car\Infrastructure\Persistence\DoctrineCarRepository
 
     App\Moto\Domain\MotoRepository:
         alias: App\Moto\Infrastructure\Persistence\DoctrineMotoRepository
 
-    App\Product\Infrastructure\Controller\ProductController:
-        tags: ['controller.service_arguments']
-
     App\Car\Infrastructure\Controller\CarController:
         tags: ['controller.service_arguments']
 
     App\Moto\Infrastructure\Controller\MotoController:
         tags: ['controller.service_arguments']
+
+    App\Product\Domain\ProductRepository:
+        alias: App\Product\Infrastructure\Persistence\DoctrineProductRepository
+
+    App\Product\Infrastructure\Controller\ProductController:
+        tags: ['controller.service_arguments']
+
+    App\Message\MessagePublisher:
+        arguments:
+            $dsn: '%env(default:rabbitmq_dsn_default:RABBITMQ_DSN)%'
+            $queueName: '%rabbitmq.queue_name%'
+
+    App\Message\MessageConsumer:
+        arguments:
+            $dsn: '%env(default:rabbitmq_dsn_default:RABBITMQ_DSN)%'
+            $queueName: '%rabbitmq.queue_name%'

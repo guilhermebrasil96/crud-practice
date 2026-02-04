@@ -12,7 +12,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 /**
  * @extends ServiceEntityRepository<Moto>
  */
-class DoctrineMotoRepository extends ServiceEntityRepository implements MotoRepository
+final class DoctrineMotoRepository extends ServiceEntityRepository implements MotoRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -22,8 +22,8 @@ class DoctrineMotoRepository extends ServiceEntityRepository implements MotoRepo
     /** @return Moto[] */
     public function findAll(): array
     {
-        return $this->createQueryBuilder('p')
-            ->orderBy('p.id', 'ASC')
+        return $this->createQueryBuilder('m')
+            ->orderBy('m.id', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -44,5 +44,4 @@ class DoctrineMotoRepository extends ServiceEntityRepository implements MotoRepo
         $this->getEntityManager()->remove($moto);
         $this->getEntityManager()->flush();
     }
-    
 }

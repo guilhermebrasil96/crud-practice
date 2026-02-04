@@ -8,11 +8,6 @@ doctrine:
             default:
                 auto_mapping: true
                 mappings:
-                    Product:
-                        is_bundle: false
-                        dir: '%kernel.project_dir%/src/Product'
-                        prefix: 'App\Product'
-                        alias: Product
                     Car:
                         is_bundle: false
                         dir: '%kernel.project_dir%/src/Car'
@@ -23,3 +18,8 @@ doctrine:
                         dir: '%kernel.project_dir%/src/Moto'
                         prefix: 'App\Moto'
                         alias: Moto
+                    Product:
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Product'
+                        prefix: 'App\Product'
+                        alias: Product

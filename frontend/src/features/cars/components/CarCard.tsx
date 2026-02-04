@@ -1,6 +1,6 @@
 import { API_URL } from '../../../api/client';
 import type { Car } from '../types/car';
-import './CarCard.css';
+import '../../../shared/styles/ProductCard.css';
 
 interface CarCardProps {
   car: Car;

@@ -18,10 +18,27 @@ services:
     networks:
       - crud_network
 
+  rabbitmq:
+    image: rabbitmq:4-management-alpine
+    container_name: crud_practice_rabbitmq
+    ports:
+      - "${RABBITMQ_PORT:-5672}:5672"
+      - "${RABBITMQ_MANAGEMENT_PORT:-15672}:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-guest}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS:-guest}
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - crud_network
+
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     container_name: crud_practice_backend
     volumes:
       - ./backend:/var/www/html
@@ -31,8 +48,11 @@ services:
       - APP_ENV=${APP_ENV:-dev}
       - APP_SECRET=${APP_SECRET:-dev_secret_change_in_production}
       - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-crud_practice}?serverVersion=16&charset=utf8
+      - RABBITMQ_DSN=amqp://${RABBITMQ_USER:-guest}:${RABBITMQ_PASS:-guest}@rabbitmq:5672/%2F
     depends_on:
       postgres:
+        condition: service_healthy
+      rabbitmq:
         condition: service_healthy
     networks:
       - crud_network

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { API_URL } from '../../../api/client';
 import type { Moto } from '../types/moto';
-import '../../products/components/ProductForm.css';
+import '../../../shared/styles/ProductForm.css';
 
 interface MotoFormProps {
   moto: Moto | null;

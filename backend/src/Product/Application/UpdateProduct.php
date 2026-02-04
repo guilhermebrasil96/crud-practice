@@ -10,20 +10,15 @@ use App\Product\Domain\ProductRepository;
 final class UpdateProduct
 {
     public function __construct(
-        private readonly ProductRepository $productRepository
+        private readonly ProductRepository $productRepository,
     ) {
     }
-
-    /**
-     * @param array{name?: string, description?: string, price?: string|float, image?: string|null} $data
-     */
     public function __invoke(int $id, array $data): ?Product
     {
         $product = $this->productRepository->findById($id);
         if ($product === null) {
             return null;
         }
-
         if (array_key_exists('name', $data)) {
             $product->setName($data['name']);
         }
@@ -36,9 +31,7 @@ final class UpdateProduct
         if (array_key_exists('image', $data)) {
             $product->setImage($data['image']);
         }
-
         $this->productRepository->save($product);
-
         return $product;
     }
 }

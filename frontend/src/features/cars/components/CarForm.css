@@ -1,8 +1,0 @@
-.form-image-preview {
-  max-width: 120px;
-  max-height: 120px;
-  display: block;
-  margin-bottom: 0.5rem;
-  border-radius: var(--radius-sm);
-  object-fit: cover;
-}

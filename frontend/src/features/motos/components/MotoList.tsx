@@ -3,7 +3,7 @@ import { motoService } from '../services/motoService';
 import type { Moto } from '../types/moto';
 import { MotoCard } from './MotoCard';
 import { MotoForm } from './MotoForm';
-import '../../products/components/ProductList.css';
+import '../../../shared/styles/ProductList.css';
 
 export function MotoList() {
   const [motos, setMotos] = useState<Moto[]>([]);

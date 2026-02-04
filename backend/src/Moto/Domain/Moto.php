@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Moto\Domain;
 
-use App\Moto\Domain\MotoRepository;
+use App\Moto\Infrastructure\Persistence\DoctrineMotoRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: MotoRepository::class)]
+#[ORM\Entity(repositoryClass: DoctrineMotoRepository::class)]
 class Moto
 {
     #[ORM\Id]

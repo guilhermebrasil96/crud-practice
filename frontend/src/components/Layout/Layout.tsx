@@ -5,14 +5,14 @@ export function Layout() {
   return (
     <div className="layout">
       <nav className="layout-nav">
-        <NavLink to="/products" className={({ isActive }) => (isActive ? 'active' : '')}>
-          Products
-        </NavLink>
         <NavLink to="/cars" className={({ isActive }) => (isActive ? 'active' : '')}>
           Cars
         </NavLink>
         <NavLink to="/motos" className={({ isActive }) => (isActive ? 'active' : '')}>
           Motos
+        </NavLink>
+        <NavLink to="/products" className={({ isActive }) => (isActive ? 'active' : '')}>
+          Products
         </NavLink>
       </nav>
       <main className="layout-main">

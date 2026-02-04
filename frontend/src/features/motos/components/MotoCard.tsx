@@ -1,6 +1,6 @@
 import { API_URL } from '../../../api/client';
 import type { Moto } from '../types/moto';
-import '../../products/components/ProductCard.css';
+import '../../../shared/styles/ProductCard.css';
 
 interface MotoCardProps {
   moto: Moto;

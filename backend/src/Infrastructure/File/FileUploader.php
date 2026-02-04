@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 final class FileUploader
 {
     private const ALLOWED_MIMES = ['image/jpeg', 'image/png', 'image/webp'];
-    private const MAX_SIZE = 2 * 1024 * 1024; // 2MB
+    private const MAX_SIZE = 2 * 1024 * 1024;
 
     public function __construct(
         private readonly string $projectDir

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Product\Domain;
 
 use App\Product\Infrastructure\Persistence\DoctrineProductRepository;
@@ -38,6 +40,7 @@ class Product
     public function setName(string $name): static
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -49,6 +52,7 @@ class Product
     public function setDescription(string $description): static
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -57,9 +61,9 @@ class Product
         return $this->price;
     }
 
-    public function setPrice(string|float $price): static
+    public function setPrice(string|float|null $price): static
     {
-        $this->price = (string) $price;
+        $this->price = $price === null ? null : (string) $price;
         return $this;
     }
 

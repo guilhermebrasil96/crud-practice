@@ -10,7 +10,7 @@ use App\Product\Domain\ProductRepository;
 final class GetProduct
 {
     public function __construct(
-        private readonly ProductRepository $productRepository
+        private readonly ProductRepository $productRepository,
     ) {
     }
 
