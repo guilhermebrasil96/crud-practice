@@ -39,7 +39,7 @@ final class MessagePublisher
     {
         $parsed = parse_url($this->dsn);
         if ($parsed === false || !isset($parsed['host'], $parsed['user'], $parsed['pass'])) {
-            throw new \InvalidArgumentException('Invalid RABBITMQ_DSN. Example: amqp://guest:guest@localhost:5672/%2F');
+            throw new \InvalidArgumentException('Invalid RABBITMQ_DSN. Set RABBITMQ_DSN in .env (e.g. amqp://user:password@host:5672/%2F).');
         }
 
         $port = (int) ($parsed['port'] ?? 5672);

@@ -1,21 +1,29 @@
-# Backend (Symfony)
+# Env and secrets (never commit)
+/.env
 /.env.local
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
+/backend/.env
+/backend/.env.dev
+/backend/.env.local
+/frontend/.env
+/frontend/.env.local
+/frontend/.env.*.local
+/frontend/.env.development
+/frontend/.env.production
+
+# Backend (Symfony)
 /backend/public/bundles/
+/backend/public/uploads/
 /backend/var/
 /backend/vendor/
-/backend/.env
 
 # Frontend (React/Vite)
 /frontend/node_modules
 /frontend/dist
 /frontend/dist-ssr
 /frontend/*.local
-/frontend/.env
-/frontend/.env.local
-/frontend/.env.*.local
 
 # Logs
 *.log
